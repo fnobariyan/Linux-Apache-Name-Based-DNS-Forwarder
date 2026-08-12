@@ -1,0 +1,37 @@
+## Edit zone file in ns1 server(master authoritative DNS server)
+
+vi /etc/named/zones/db.mcloud.local
+$TTL 3H
+@       IN SOA  @ rname.invalid. (
+                                        5       ; serial
+                                        1D      ; refresh
+                                        1H      ; retry
+                                        1W      ; expire
+                                        3H )    ; minimum
+        NS      ns1.mcloud.local.
+        A       192.168.56.102
+ns1     A       192.168.56.102
+www     A       192.168.56.106
+dl      A       192.168.56.106
+w       CNAME   www.mcloud.local.
+ww      CNAME   www.mcloud.local.
+
+systemctl restart named
+
+## Testing 
+
+dig @127.0.0.1 www.mcloud.local
+#you should see this part :
+;; ANSWER SECTION:
+www.mcloud.local.       10800   IN      A       192.168.56.106
+
+##Testing again on forwarder DNS server
+
+dig @127.0.0.1 www.mcloud.local
+#you should see this part :
+;; ANSWER SECTION:
+www.mcloud.local.       10800   IN      A       192.168.56.106
+
+##Then you should set forwarder's ip as DNS server on your windows server
+*Make sure to set it on the network card associated with your VirtualBox.*
+
