@@ -1,0 +1,20 @@
+##Creat configuratin file
+vi /etc/httpd/conf.d/www-mcloud.conf
+<VirtualHost 192.168.56.106:80>
+        ServerName www.mcloud.local
+        ServerAdmin admin@mcloud.local
+        DocumentRoot /var/www/html/www-mcloud/mcloud
+        ErrorLog /var/log/httpd/www-mcloud-error.log
+        CustomLog /var/log/httpd/www-mcloud-access-log combined
+</VirtualHost>
+##Creat configuratin file  
+vi /etc/httpd/conf.d/dl-mcloud.conf
+<VirtualHost 192.168.56.106:80>
+        ServerName dl.mcloud.local
+        ServerAdmin admin@mcloud.local
+        DocumentRoot /var/www/html/dl-mcloud/dl-mcloud-local
+        ErrorLog     /var/log/httpd/dl-mcloud-error.log
+        CustomLog    /var/log/httpd/dl-mcloud-access.log combined
+</VirtualHost>
+
+  systemctl restart httpd
